@@ -5,13 +5,21 @@
 // @author s0beit
 // @include https://www.ccl4illinois.com/ccw/*
 // @require http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js
-// @version 1.0
+// @version 2.0
 // ==/UserScript==
 
-function additionalStatus(id) {
-	var originalStatus = $(id).text();
-	var extraStatusData = $(id).attr('class');
-	$(id).text(originalStatus + " (" + extraStatusData + ")");
+function additionalStatusMyApp() {
+	var originalStatus = $('#lblStatus').text();
+	var extraStatusData = $('#lblStatus').attr('class');
+	$('#lblStatus').text(originalStatus + " (" + extraStatusData + ")");
+}
+
+function additionalStatusDash() {
+	var selectedDiv = $('#divMyStatus').children().last();
+	var originalStatus = selectedDiv.text();
+	var extraStatusData = selectedDiv.attr('class');
+
+	selectedDiv.html(originalStatus + "<br />(" + extraStatusData + ")");
 }
 
 $(document).ready(function() {
@@ -21,10 +29,10 @@ $(document).ready(function() {
 		var asp = pathArray[pathArray.length - 1].toLowerCase();
 
 		if(asp == 'dash.aspx') {
-			additionalStatus('#lblAppStatus');
-			$('#divCancelLicense').remove();
+			additionalStatusDash();
+			$('#aCancelLicensePrompt').remove();
 		} else if(asp == 'myapp.aspx') {
-			additionalStatus('#lblStatus');
+			additionalStatusMyApp();
 		}
 	}
 });
